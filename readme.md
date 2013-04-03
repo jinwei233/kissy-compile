@@ -1,16 +1,22 @@
-## silly 的第一个第三方插件
+## 打包工具 silly 的第一个第三方插件
    用于给kissy模块依赖分析、合并、打包
 
+## 安装
+```sh
+$ cd third-party				# 进入你的kissy包的顶级目录
+$ npm install kissy-compile		# 安装kissy-compile到本地
+```
 ## 使用实例
-
-### 打包文件index.js
+   假设一个前端工程的目录，以及文件内容如下所示，要打包的文件是index.js
+### 目录结构 
 ```text
-├── app.json
-├── index.js
-└── mods
-    ├── moda.js
-    ├── modb.js
-    └── modc.js
+third-party
+		 ├── app.json
+		 ├── index.js
+		 └── mods
+			 ├── moda.js
+			 ├── modb.js
+			 └── modc.js
 ```
 ### app.json内容为
 ```javascript
@@ -28,7 +34,6 @@
 ### index.js
 
 ```javascript
-// -*- coding: utf-8; -*-
 KISSY.add(function(){
 
 },{
@@ -42,15 +47,26 @@ KISSY.add(function(){
 
 });
 ```
-### 执行
+### 执行kissy-compile任务
 
 ```shell
-silly run
+silly run # 会自动去app.json中读取任务配置。也可以制定配置文件silly run -c other-cfg-name.json
 ```
-  分析index.js的依赖关系，并合并、压缩后，生一个新文件index-min.js：
+  silly-compile做了什么工作？app.json就是用来描述这些工作的：
+  分析index.js的依赖关系，合并、压缩后，生一个新文件index-min.js：
 
 ```javascript
-KISSY.add("third-party/mods/modc",function(){}),KISSY.add("third-party/mods/modb",function(){}),KISSY.add("third-party/mods/moda",function(){},{requires:["third-party/mods/modb","third-party/mods/modc"]}),KISSY.add("third-party/index",function(){},{requires:["third-party/mods/moda","third-party/mods/modb"]});
+KISSY.add("third-party/mods/modb",function(){
+
+}),
+KISSY.add("third-party/mods/moda",function(){
+
+}),
+KISSY.add("third-party/index",function(){
+
+},{
+  requires:["third-party/mods/moda","third-party/mods/modb"]
+});
 ```
   实例详见 https://github.com/WeweTom/silly/tree/master/examples/third-party
 
