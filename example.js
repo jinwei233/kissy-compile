@@ -1,8 +1,3 @@
-## silly 的第一个第三方插件
-   用于给kissy模块依赖分析、合并、打包
-## 插件模板
-
-```javascript
 module.exports = function(plugin_cfg,silly_config,silly){
   var Q = silly.Q
 
@@ -29,4 +24,3 @@ module.exports = function(plugin_cfg,silly_config,silly){
    */
   return promise
 }
-```
